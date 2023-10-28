@@ -1,0 +1,5 @@
+,position_id,position_name,position_short_name,total_player_count
+0,1,Goalkeeper,GKP,85
+1,2,Defender,DEF,233
+2,3,Midfielder,MID,310
+3,4,Forward,FWD,94
