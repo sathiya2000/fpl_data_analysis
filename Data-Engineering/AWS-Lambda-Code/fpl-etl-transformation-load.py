@@ -120,6 +120,7 @@ def lambda_handler(event, context):
     s3 = boto3.client("s3")
     Bucket = 'fpl-etl-project-sathiya'
     Key = 'raw_data/to-be-processed/'
+    s3_resource = boto3.resource('s3')
     
     #extract raw data from S3 Bucket
     fpl_data = []
@@ -164,8 +165,11 @@ def lambda_handler(event, context):
         }
         fixture_df = fixture_df.astype(convert_dict)
         
+        #convert to CSV
+        fixture_key = "transformed_data/fixture_data/fixture_transformed_data" + ".csv"
+        #delete the old file
+        s3_resource.Object(Bucket, fixture_key).delete() 
         
-        fixture_key = "transformed_data/fixture_data/fixture_transformed_data" + str(datetime.now()) + ".csv"
         fixture_buffer = StringIO()
         fixture_df.to_csv(fixture_buffer)
         fixture_content = fixture_buffer.getvalue()
@@ -215,7 +219,12 @@ def lambda_handler(event, context):
             player_list1.append(player_element1)
     individual_player_df = pd.DataFrame.from_dict(player_list1)
     
-    individual_player_key = "transformed_data/individual_player_data/individual_player_data_" + str(datetime.now()) + ".csv"
+    #convert to CSV
+    individual_player_key = "transformed_data/individual_player_data/individual_player_data" + ".csv"
+    
+    #delete the old file
+    s3_resource.Object(Bucket, individual_player_key).delete()
+    
     individual_buffer = StringIO()
     individual_player_df.to_csv(individual_buffer)
     individual_content = individual_buffer.getvalue()
@@ -245,26 +254,38 @@ def lambda_handler(event, context):
         
         
         
-        
         #convert dataframes to csv and export to S3 Bucket
-        position_key = "transformed_data/player_position_data/position_transformed_data_" + str(datetime.now()) + ".csv"
+        position_key = "transformed_data/player_position_data/position_transformed_data"  + ".csv"
+        s3_resource.Object(Bucket, position_key).delete()
         position_buffer = StringIO()
         position_df.to_csv(position_buffer)
         position_content = position_buffer.getvalue()
         s3.put_object(Bucket = Bucket, Key = position_key, Body = position_content)
         
         
-        player_key = "transformed_data/player_data/player_transformed_data_" + str(datetime.now()) + ".csv"
+        player_key = "transformed_data/player_data/player_transformed_data" + ".csv"
+        s3_resource.Object(Bucket, player_key).delete()
         player_buffer = StringIO()
         player_df.to_csv(player_buffer)
         player_content = player_buffer.getvalue()
         s3.put_object(Bucket = Bucket, Key = player_key, Body = player_content)
         
         
-        team_key = "transformed_data/team_data/team_transformed_data" + str(datetime.now()) + ".csv"
+        team_key = "transformed_data/team_data/team_transformed_data" + ".csv"
+        s3_resource.Object(Bucket, team_key).delete()
         team_buffer = StringIO()
         team_df.to_csv(team_buffer)
         team_content = team_buffer.getvalue()
         s3.put_object(Bucket = Bucket, Key = team_key, Body = team_content)
-            
+        
+    
+    new_keys = fpl_keys + fix_keys    
+    for i in new_keys:
+        copy_resource = {
+            'Bucket': Bucket,
+            'Key' : i
+        }
+        s3_resource.meta.client.copy(copy_resource, Bucket, 'raw_data/processed/' + i.split('/')[-1])
+        s3_resource.Object(Bucket, i).delete()
+        
     print('Successfully tranformed JSON Data to CSV and stored in S3')
