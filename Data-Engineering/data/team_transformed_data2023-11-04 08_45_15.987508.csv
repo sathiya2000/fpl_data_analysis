@@ -1,0 +1,21 @@
+,team_id,team_name,team_played,win,loss,draw,team_position,team_strength,team_form,short_name,team_code
+0,1,Arsenal,0,0,0,0,0,4,,ARS,3
+1,2,Aston Villa,0,0,0,0,0,3,,AVL,7
+2,3,Bournemouth,0,0,0,0,0,3,,BOU,91
+3,4,Brentford,0,0,0,0,0,3,,BRE,94
+4,5,Brighton,0,0,0,0,0,3,,BHA,36
+5,6,Burnley,0,0,0,0,0,2,,BUR,90
+6,7,Chelsea,0,0,0,0,0,3,,CHE,8
+7,8,Crystal Palace,0,0,0,0,0,3,,CRY,31
+8,9,Everton,0,0,0,0,0,3,,EVE,11
+9,10,Fulham,0,0,0,0,0,3,,FUL,54
+10,11,Liverpool,0,0,0,0,0,4,,LIV,14
+11,12,Luton,0,0,0,0,0,2,,LUT,102
+12,13,Man City,0,0,0,0,0,5,,MCI,43
+13,14,Man Utd,0,0,0,0,0,4,,MUN,1
+14,15,Newcastle,0,0,0,0,0,4,,NEW,4
+15,16,Nott'm Forest,0,0,0,0,0,3,,NFO,17
+16,17,Sheffield Utd,0,0,0,0,0,2,,SHU,49
+17,18,Spurs,0,0,0,0,0,3,,TOT,6
+18,19,West Ham,0,0,0,0,0,3,,WHU,21
+19,20,Wolves,0,0,0,0,0,3,,WOL,39
