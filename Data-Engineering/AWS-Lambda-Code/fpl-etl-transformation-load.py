@@ -153,8 +153,8 @@ def lambda_handler(event, context):
         fixture_list = fixture(n)
         fixture_df = pd.DataFrame.from_dict(fixture_list)
         fixture_df = fixture_df.drop([0])
-        fixture_df.drop(index=fixture_df.index[0], axis=0, inplace=True)
-        fixture_df = fixture_df.tail(-1)
+        #fixture_df.drop(index=fixture_df.index[0], axis=0, inplace=True)
+        #fixture_df = fixture_df.tail(-1)
         fixture_df=fixture_df.fillna('0')
         fixture_df['kickoff_time'] = pd.to_datetime(fixture_df['kickoff_time'])
         #convert datatypes of columns
